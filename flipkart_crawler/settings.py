@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for flipkart_tshirts_men project
+# Scrapy settings for flipkart_crawler project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,15 +9,15 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'flipkart_tshirts_men'
+BOT_NAME = 'flipkart_crawler'
 
-SPIDER_MODULES = ['flipkart_tshirts_men.spiders']
-NEWSPIDER_MODULE = 'flipkart_tshirts_men.spiders'
+SPIDER_MODULES = ['flipkart_crawler.spiders']
+NEWSPIDER_MODULE = 'flipkart_crawler.spiders'
 
-ITEM_PIPELINES = {'flipkart_tshirts_men.pipelines.MyImagesPipeline': 1}
+ITEM_PIPELINES = {'flipkart_crawler.pipelines.MyImagesPipeline': 1}
 IMAGES_STORE = 'images'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'flipkart_tshirts_men (+http://www.yourdomain.com)'
+#USER_AGENT = 'flipkart_crawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -48,13 +48,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'flipkart_tshirts_men.middlewares.FlipkartTshirtsMenSpiderMiddleware': 543,
+#    'flipkart_crawler.middlewares.FlipkartTshirtsMenSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'flipkart_tshirts_men.middlewares.FlipkartTshirtsMenDownloaderMiddleware': 543,
+#    'flipkart_crawler.middlewares.FlipkartTshirtsMenDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -66,7 +66,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    'flipkart_tshirts_men.pipelines.FlipkartTshirtsMenPipeline': 300,
+#    'flipkart_crawler.pipelines.FlipkartTshirtsMenPipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
