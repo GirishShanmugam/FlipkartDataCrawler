@@ -15,13 +15,12 @@ SPIDER_MODULES = ['flipkart_crawler.spiders']
 NEWSPIDER_MODULE = 'flipkart_crawler.spiders'
 
 ITEM_PIPELINES = {'flipkart_crawler.pipelines.MyImagesPipeline': 1}
-IMAGES_STORE = 'images/flipkart/men/tshirts'
+IMAGES_STORE = 'images'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'flipkart_crawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
-
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 

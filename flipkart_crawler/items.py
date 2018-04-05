@@ -11,3 +11,5 @@ import scrapy
 class FlipkartTshirtsMenItem(scrapy.Item):
     # define the fields for your item here like:
     image_urls = scrapy.Field()
+    page_url = scrapy.Field()
+    image_paths = scrapy.Field()
