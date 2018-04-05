@@ -1,11 +1,12 @@
 import scrapy
 from ..items import FlipkartTshirtsMenItem
 import json, csv, os
+import hashlib
 
 
 class FlipkartSpider(scrapy.Spider):
     name = "product_category_list_crawler"
-    start_urls = ['https://www.flipkart.com/men/tshirts/pr?otracker=nmenu_sub_Men_0_T-Shirts&page=2&sid=2oq%2Cs9b%2Cj9y&viewType=grid']
+    start_urls = ['https://www.flipkart.com/men/tshirts/pr?otracker=nmenu_sub_Men_0_T-Shirts&page=50&sid=2oq%2Cs9b%2Cj9y&viewType=grid']
     item_id = 1
     page_number = 0
 
@@ -44,11 +45,13 @@ class FlipkartSpider(scrapy.Spider):
                             image_url = image['url'].encode('utf-8').replace('{@width}', '200')
                             image_url = image_url.encode('utf-8').replace('{@height}', '200')
                             image_url = image_url.encode('utf-8').replace('{@quality}', '100')
+                            hash_object = hashlib.sha1(image_url)
+                            hex_dig = hash_object.hexdigest()
                             writer.writerow({'id': self.item_id, 'page_number': self.page_number, 'flipkart_product_id': flipkart_item_id, 'title': title,
                                              'key_specs': key_specs, 'analytics_data': analytics_data, 'rating': rating,
-                                             'file_name': str(self.item_id)+'.jpeg', 'url': image_url})
+                                             'file_name': str(hex_dig)+'.jpeg', 'url': image_url})
                             # download the images from the url
-                            yield FlipkartTshirtsMenItem(image_urls=[image_url], file_name=str(self.item_id)+'.jpeg')
+                            yield FlipkartTshirtsMenItem(image_urls=[image_url])
                             self.item_id = self.item_id+1
                     except Exception as e:
                         print e
