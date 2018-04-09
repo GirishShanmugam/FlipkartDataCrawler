@@ -15,7 +15,7 @@ class MyImagesPipeline(ImagesPipeline):
     def file_path(self, request, response=None, info=None):
         image_path = request.meta['page_url'][:request.meta['page_url'].rfind('/')]
         image_path = image_path[image_path.rfind('/') + len('/'):]
-        image_guid = '/flipkart/men/'+ image_path + '/' + hashlib.sha1(request.url).hexdigest() +'.jpg'
+        image_guid = '/flipkart/'+ image_path + '/' + hashlib.sha1(request.url).hexdigest() +'.jpg'
         return image_guid
 
     def get_media_requests(self, item, info):

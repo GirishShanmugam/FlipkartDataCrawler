@@ -1,6 +1,5 @@
 import scrapy
 
-import flipkart_crawler
 from ..items import FlipkartTshirtsMenItem
 import json, csv, os
 import hashlib
@@ -8,19 +7,8 @@ import hashlib
 
 class FlipkartSpider(scrapy.Spider):
     name = "product_category_list_crawler"
-    start_urls = [
-        'https://www.flipkart.com/men/shirts/pr?otracker=nmenu_sub_Men_0_Shirts&page=2&sid=2oq%2Cs9b%2Cmg4&viewType=grid',
-        'https://www.flipkart.com/men/tshirts/pr?otracker=nmenu_sub_Men_0_T-Shirts&page=2&sid=2oq%2Cs9b%2Cj9y&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/ethnic-wear/kurtas/pr?otracker=nmenu_sub_Men_0_Kurtas&page=2&sid=2oq%2Cs9b%2C3a0%2Cr6s&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/suits-blazers/pr?otracker=nmenu_sub_Men_0_Suits+and+Blazers&page=2&sid=2oq%2Cs9b%2Cq9f&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/winter-seasonal-wear/jackets/pr?otracker=nmenu_sub_Men_0_Jackets&page=2&sid=2oq%2Cs9b%2Cqgu%2C8cd&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/winter-seasonal-wear/sweatshirts/pr?otracker=nmenu_sub_Men_0_Sweatshirts&page=2&sid=2oq%2Cs9b%2Cqgu%2C8vm&viewType=grid',
-        'https://www.flipkart.com/men/jeans/pr?otracker=nmenu_sub_Men_0_Jeans&page=2&sid=2oq%2Cs9b%2C94h&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/trousers/pr?otracker=nmenu_sub_Men_0_Trousers&page=2&sid=2oq%2Cs9b%2C9uj&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/~shorts-and-capris/pr?otracker=nmenu_sub_Men_0_Shorts+and+3%2F4ths&page=2&sid=2oq%2Cs9b&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/cargos-shorts-34ths/cargos/pr?otracker=nmenu_sub_Men_0_Cargos&page=2&sid=2oq%2Cs9b%2Cvde%2Clrd&viewType=grid',
-        'https://www.flipkart.com/mens-clothing/sports-wear/track-pants/pr?otracker=nmenu_sub_Men_0_Track+pants&page=2&sid=2oq%2Cs9b%2C6gr%2Crfn&viewType=grid']
-
+    # enter the urls to crawl as a list here
+    start_urls = ['https://www.flipkart.com/sarees/pr?otracker=nmenu_sub_Women_0_Sarees&otracker=nmenu_sub_Women_0_Sarees&page=50&sid=2oq%2Cc1r%2C3pj%2C7od&viewType=grid']
     item_id = 1
     page_number = 0
 
@@ -29,7 +17,9 @@ class FlipkartSpider(scrapy.Spider):
         self.page_number = response.url[response.url.find('page=')+len('page='):response.url.rfind('&sid')]
         csv_file_name = response.url[:response.url.rfind('/')]
         csv_file_name = csv_file_name[csv_file_name.rfind('/')+len('/'):]
-        csv_file_name = 'flipkart_men_' + csv_file_name.replace('/', '_') + '.csv'
+        if not os.path.exists('/datasets'):
+            os.makedirs('datasets')
+        csv_file_name = 'datasets/flipkart_' + csv_file_name.replace('/', '_') + '.csv'
         data = response.xpath("//script[contains(., 'media')]/text()").extract_first()
         if data is not None:
             data = data.encode('utf-8')
@@ -41,7 +31,7 @@ class FlipkartSpider(scrapy.Spider):
             raw_json = self.convert_keys_to_string(raw_json)
 
             # write the crawled data to a csv file
-            with open(csv_file_name, 'w') as csvfile:
+            with open(csv_file_name, 'a') as csvfile:
                 fieldnames = ['id', 'page_number', 'flipkart_product_id', 'title', 'key_specs', 'analytics_data', 'rating',
                               'file_name', 'url']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
