@@ -15,7 +15,9 @@ Instructions
 
         pip install Scrapy
 
-#. Enter the URL's to crawl from in start_urls list in ``/flipkart_crawler/spiders/flipkart_spider.py``
+#. Enter the URL's to crawl from in ``start_urls`` list in ``/flipkart_crawler/spiders/flipkart_spider.py``:
+
+        start_urls = ['https://www.flipkart.com/mens-clothing/tshirts/pr?sid=2oq,s9b,j9y&otracker=nmenu_sub_Men_0_T-Shirts']
 
 #. Run this command to get the data:
 
